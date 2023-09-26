@@ -1,0 +1,87 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.impute import SimpleImputer
+
+# Load data from a CSV file
+data = pd.read_csv('C:/Users/sarwe/Spyder files/Data Mining/downsampled_dataset.csv')  # Replace with your actual file path
+
+# Define the labels based on points
+def label_sentiment(points):
+    if points > 95:
+        return 'excellent'
+    elif points > 90:
+        return 'very good'
+    elif points > 85:
+        return 'good'
+    elif points > 80:
+        return 'bad'
+    else:
+        return 'very bad'
+
+# Apply the label_sentiment function to create the target labels
+data['sentiment'] = data['points'].apply(label_sentiment)
+
+# Drop unnecessary columns
+data = data.drop(['country', 'description', 'designation', 'province', 'region_1', 'region_2', 'variety', 'winery'], axis=1)
+
+# Split data into features (X) and target labels (y)
+X = data.drop('sentiment', axis=1)
+y = data['sentiment']
+
+# Impute missing values in X with the mean (you can choose another strategy if needed)
+imputer = SimpleImputer(strategy='mean')
+X = imputer.fit_transform(X)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the Random Forest Classifier
+clf = RandomForestClassifier(random_state=42)
+clf.fit(X_train, y_train)
+
+# Make predictions on the test data
+y_pred = clf.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy * 100:.2f}%')
+
+# Function to predict sentiment for a list of reviews
+def predict_sentiment(reviews):
+    # Create a DataFrame from the reviews
+    review_data = pd.DataFrame({'Unnamed: 0': [np.nan] * len(reviews), 'points': [np.nan] * len(reviews), 'price': [np.nan] * len(reviews)})
+    
+    # Impute missing values in review_data with the mean
+    review_data = imputer.transform(review_data)
+    
+    # Make predictions on the review data
+    sentiment_predictions = clf.predict(review_data)
+    
+    return sentiment_predictions
+
+# Example usage: pass a list of reviews to predict_sentiment
+sample_reviews = [
+   "I had high hopes for this wine, but it fell flat. It lacks flavor and character.",
+   "This wine is a disappointment. It tastes cheap and leaves a bitter aftertaste.",
+   "I regret buying this wine. It's bland and unimpressive.",
+   "I can't believe I wasted money on this wine. It's simply not worth it.",
+   "This wine is a letdown. It's harsh and doesn't live up to its price.",
+   "I expected better from this wine. It's mediocre at best.",
+   "This wine is a poor choice. It lacks depth and complexity.",
+   "I wouldn't recommend this wine to anyone. It's a complete miss.",
+   "I had a terrible experience with this wine. It's not enjoyable at all.",
+   "I can't find anything positive to say about this wine. It's a total dud.",
+   "This wine is a disappointment. It's bland and unremarkable.",
+   "I was hoping for something better, but this wine is a letdown.",
+   "I wouldn't buy this wine again. It's a waste of money.",
+   "This wine is nothing special. It's forgettable and uninspiring.",
+   "I'm not impressed with this wine. It lacks the depth and character I expected."
+]
+predictions = predict_sentiment(sample_reviews)
+
+for review, prediction in zip(sample_reviews, predictions):
+    print(f"Review: {review}")
+    print(f"Predicted Sentiment: {prediction}")
+    print()
