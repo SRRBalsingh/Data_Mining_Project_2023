@@ -1,0 +1,53 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load your dataset from a CSV file
+data = pd.read_csv('C:/Users/sarwe/Spyder files/Data Mining/downsampled_dataset.csv')
+
+# Map the labels: >=90 as 'positive', <90 as 'negative'
+data['sentiment'] = data['points'].apply(lambda x: 'positive' if x >= 90 else 'negative')
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data['description'], data['sentiment'], test_size=0.2, random_state=42)
+
+# Create a CountVectorizer to convert text data into numerical features
+vectorizer = CountVectorizer()
+X_train_vec = vectorizer.fit_transform(X_train)
+X_test_vec = vectorizer.transform(X_test)
+
+# Train a Multinomial Naive Bayes classifier
+classifier = MultinomialNB()
+classifier.fit(X_train_vec, y_train)
+
+# Predict sentiment on the test data
+y_pred = classifier.predict(X_test_vec)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+classification_rep = classification_report(y_test, y_pred)
+
+print(f"Accuracy: {accuracy}")
+print("Classification Report:\n", classification_rep)
+
+# Sample reviews for testing
+sample_reviews = [
+    "I absolutely love these shoes! They are so comfortable and stylish.",
+    "The quality of these shoes is outstanding. I'm very impressed.",
+    "These shoes exceeded my expectations. I can't recommend them enough.",
+    "Great fit and excellent support. These shoes are a game-changer.",
+    "I get compliments on these shoes everywhere I go. They are fantastic."
+]
+
+# Vectorize the sample reviews
+sample_reviews_vec = vectorizer.transform(sample_reviews)
+
+# Predict sentiment for sample reviews
+sample_sentiments = classifier.predict(sample_reviews_vec)
+
+for review, sentiment in zip(sample_reviews, sample_sentiments):
+    print(f"Review: {review}")
+    print(f"Predicted Sentiment: {sentiment}")
+    print()
