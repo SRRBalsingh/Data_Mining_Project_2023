@@ -1,0 +1,42 @@
+import pandas as pd
+import random
+import shutil
+
+# Load your dataset into a DataFrame (assuming your data is in a CSV file)
+# Replace 'your_dataset.csv' with the actual path to your dataset
+df = pd.read_csv('C:/Users/sarwe/Spyder files/Data Mining/winemag-data_first150k.csv')
+
+# Define the desired number of reviews per point
+reviews_per_point = 3750
+
+# Create an empty DataFrame with the same columns as your original DataFrame
+downsampled_df = pd.DataFrame(columns=df.columns)
+
+# Iterate through points from 80 to 100
+for point in range(80, 101):
+    # Filter the DataFrame to select reviews with the current point
+    reviews_for_point = df[df['points'] == point]
+    
+    # If there are more reviews than needed, randomly sample reviews
+    if len(reviews_for_point) > reviews_per_point:
+        reviews_for_point = reviews_for_point.sample(reviews_per_point, random_state=42)
+    
+    # Add the sampled reviews to the downsampled DataFrame
+    downsampled_df = pd.concat([downsampled_df, reviews_for_point])
+
+# Save the downsampled dataset to a new CSV file
+downsampled_df.to_csv('downsampled_dataset.csv', index=False)
+
+# Specify the local path where you want to store the dataset
+local_path = 'C:/Users/sarwe/Spyder files/Data Mining/'
+
+# Define the source file path
+source_file_path = 'downsampled_dataset.csv'
+
+# Define the destination file path
+destination_file_path = local_path + 'downsampled_dataset.csv'
+
+# Move the file to the desired local path
+shutil.move(source_file_path, destination_file_path)
+
+print(f'Saved dataset to {destination_file_path}')
