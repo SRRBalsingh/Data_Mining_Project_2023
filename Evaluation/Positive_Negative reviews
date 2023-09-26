@@ -1,0 +1,52 @@
+# Generate 15 positive wine reviews
+positive_reviews = [
+    "This wine is a delight! It has a rich, full-bodied flavor with a smooth finish.",
+    "I couldn't be happier with this wine. It's a true gem with a perfect balance of fruitiness and oakiness.",
+    "What a pleasant surprise! This wine exceeded my expectations, and I'll definitely be buying more.",
+    "A beautiful wine with a wonderful aroma and a taste that lingers on the palate.",
+    "I can't get enough of this wine. It's simply fantastic and pairs well with everything.",
+    "An exquisite wine that's perfect for special occasions. I highly recommend it.",
+    "This wine has a lovely complexity that keeps me coming back for more.",
+    "Smooth, velvety, and utterly delicious. This wine is a winner in my book.",
+    "I was blown away by the quality of this wine. It's a true masterpiece.",
+    "A true crowd-pleaser! This wine never disappoints and is always a hit at gatherings.",
+    "Rich and flavorful, this wine is a true treat for the senses.",
+    "I'm impressed by the depth and character of this wine. It's a must-try.",
+    "A well-balanced and elegant wine that I can't get enough of.",
+    "This wine is the perfect choice for a romantic dinner. It sets the mood beautifully.",
+    "Every sip of this wine is a journey through flavor. It's an absolute joy to drink."
+]
+
+# Generate 15 negative wine reviews
+negative_reviews = [
+    "I had high hopes for this wine, but it fell flat. It lacks flavor and character.",
+    "This wine is a disappointment. It tastes cheap and leaves a bitter aftertaste.",
+    "I regret buying this wine. It's bland and unimpressive.",
+    "I can't believe I wasted money on this wine. It's simply not worth it.",
+    "This wine is a letdown. It's harsh and doesn't live up to its price.",
+    "I expected better from this wine. It's mediocre at best.",
+    "This wine is a poor choice. It lacks depth and complexity.",
+    "I wouldn't recommend this wine to anyone. It's a complete miss.",
+    "I had a terrible experience with this wine. It's not enjoyable at all.",
+    "I can't find anything positive to say about this wine. It's a total dud.",
+    "This wine is a disappointment. It's bland and unremarkable.",
+    "I was hoping for something better, but this wine is a letdown.",
+    "I wouldn't buy this wine again. It's a waste of money.",
+    "This wine is nothing special. It's forgettable and uninspiring.",
+    "I'm not impressed with this wine. It lacks the depth and character I expected."
+]
+
+# Shoe reviews
+reviews = [
+    "These shoes are amazing! They are so comfortable and stylish.",
+    "I love these shoes. They fit perfectly and look great.",
+    "These shoes are worth every penny. The quality is outstanding.",
+    "The best shoes I've ever owned. They feel like walking on clouds.",
+    "These shoes exceeded my expectations. I'm extremely satisfied.",
+
+    "Terrible shoes. Uncomfortable and poorly made.",
+    "I regret buying these shoes. They hurt my feet and fell apart quickly.",
+    "Do not buy these shoes. They are a waste of money.",
+    "Awful quality shoes. I'm very disappointed.",
+    "I would not recommend these shoes to anyone."
+]
